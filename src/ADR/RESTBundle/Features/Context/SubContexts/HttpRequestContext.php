@@ -22,28 +22,40 @@ class HttpRequestContext extends BehatContext
     protected $baseUrl = 'http://rest.core.local/app_dev.php/api/';
     protected $response;
     protected $method = 'GET';
+    protected $validMethods = array('GET', 'POST', 'PUT', 'DELETE');
     protected $call;
     protected $unsignedResponse;
+    protected $requestParameters = array();
 
-    public function __construct(array $parameters)
+    public function __construct()
     {
-        $this->parameters = $parameters;
     }
 
     /**
      * @Given /^I set "([^"]*)" to "([^"]*)"$/
      */
-    public function iSetTo($arg1, $arg2)
+    public function iSetTo($attribute, $value)
     {
-        throw new PendingException();
+        $this->$attribute = $value;
     }
 
     /**
      * @Given /^I use "([^"]*)" method$/
      */
-    public function iUseMethod($arg1)
+    public function iUseMethod($method)
     {
-        throw new PendingException();
+        if (!in_array($method, $this->validMethods))
+            throw new \Exception("Error Method Not Permitted ".$method);
+
+        $this->method = $method;
+    }
+
+    /**
+     * @Given /^I set "([^"]*)" parameter "([^"]*)" to "([^"]*)"$/
+     */
+    public function iSetParameterTo($arg1, $arg2, $arg3)
+    {
+        $this->requestParameters[$arg2] = $arg3;
     }
 
     /**
@@ -51,7 +63,42 @@ class HttpRequestContext extends BehatContext
      */
     public function iCallToApi()
     {
-        throw new PendingException();
+        if (!property_exists($this, 'version'))
+            throw new \Exception("Version Not Found in Request");
+
+        if (!property_exists($this, 'entity'))
+            throw new \Exception("Entity Not Found in Request");
+
+        $this->call($this->getUrl());
+    }
+
+    protected function getUrl()
+    {
+        $url = $this->baseUrl.'v'.$this->version.'/'.$this->entity;
+
+        if (property_exists($this, 'id'))
+            $url .= '/'.$this->id;
+
+        return $url;
+    }
+
+    protected function call($url)
+    {
+        $browser = new Client();
+
+        $this->call = $browser->createRequest(RequestInterface::$this->method, $url);
+        if (count($this->requestParameters) > 0) {
+            $this->addPostParameters();
+        }
+
+        $this->send = $this->call->send();
+    }
+
+    protected function addPostParameters()
+    {
+        foreach ($this->requestParameters AS $key=>$value) {
+            $this->call->setPostField($key, $value);
+        }
     }
 
     /**
@@ -59,7 +106,9 @@ class HttpRequestContext extends BehatContext
      */
     public function iGetAValidResponse()
     {
-        throw new PendingException();
+        $this->response = $this->send->getBody(true);
+        if (empty($this->response))
+            throw new \Exception('Null Response from API call');
     }
 
     /**
@@ -67,7 +116,7 @@ class HttpRequestContext extends BehatContext
      */
     public function theResponseCodeIs($arg1)
     {
-        throw new PendingException();
+        assertEquals($this->send->getStatusCode(), $arg1);
     }
 
     /**
@@ -75,7 +124,10 @@ class HttpRequestContext extends BehatContext
      */
     public function theResponseIsJson()
     {
-        throw new PendingException();
+        $this->rawData = json_decode($this->response);
+
+        if (empty($this->rawData))
+            throw new \Exception('No Json Data found on Response from API call');
     }
 
     /**
@@ -83,7 +135,7 @@ class HttpRequestContext extends BehatContext
      */
     public function theResponseStructureIsValid()
     {
-        throw new PendingException();
+        assertTrue(get_object_vars($this->rawData) > 0);
     }
 
 }
