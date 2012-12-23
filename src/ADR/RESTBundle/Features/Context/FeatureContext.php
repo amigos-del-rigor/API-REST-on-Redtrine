@@ -24,13 +24,10 @@ require_once 'PHPUnit/Framework/Assert/Functions.php';
 /**
  * Feature context.
  */
-class FeatureContext extends BehatContext
-                  implements KernelAwareInterface
+class FeatureContext extends BehatContext implements KernelAwareInterface
 {
     private $kernel;
     private $parameters;
-
-
 
     /**
      * Initializes context with parameters from behat.yml.

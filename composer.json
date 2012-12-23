@@ -19,6 +19,10 @@
         "jms/security-extra-bundle": "1.2.*",
         "jms/di-extra-bundle": "1.1.*",
         "kriswallsmith/assetic": "1.1.*@dev",
+        "snc/redis-bundle":"1.1.0",
+        "predis/predis":"0.7.*@stable"
+    },
+    "require-dev": {
         "behat/behat":                  "*",
         "behat/symfony2-extension":     "*",
         "behat/mink-extension":         "*",
@@ -26,7 +30,8 @@
         "behat/mink-selenium-driver":   "*",
         "behat/mink-selenium2-driver": "*",
         "behat/mink-goutte-driver": "*",
-        "behat/mink-sahi-driver": "*"
+        "behat/mink-sahi-driver": "*",
+        "raulfraile/ladybug-bundle":"dev-master"
     },
     "scripts": {
         "post-install-cmd": [

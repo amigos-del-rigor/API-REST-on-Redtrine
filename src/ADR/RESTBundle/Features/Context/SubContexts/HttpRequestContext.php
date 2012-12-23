@@ -24,7 +24,8 @@ class HttpRequestContext extends BehatContext
     protected $method = 'GET';
     protected $validMethods = array('GET', 'POST', 'PUT', 'DELETE');
     protected $call;
-    protected $unsignedResponse;
+    protected $send;
+    protected $rawData;
     protected $requestParameters = array();
 
     public function __construct()
