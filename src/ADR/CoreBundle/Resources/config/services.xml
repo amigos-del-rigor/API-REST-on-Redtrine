@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+            <parameter key="adr.core.controller.class">ADR\CoreBundle\Controller\CoreController</parameter>
+    </parameters>
+    <services>
+        <service id="adr.core.controller" class="%adr.core.controller.class%" scope="request" >
+            <argument type="service" id="templating" />
+        </service>
+    </services>
+</container>

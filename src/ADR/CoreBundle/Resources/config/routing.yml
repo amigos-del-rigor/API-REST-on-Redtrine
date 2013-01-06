@@ -1,0 +1,11 @@
+adr_core_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: ADRCoreBundle:Default:index }
+
+adr_core_block:
+    pattern:  /block
+    defaults: { _controller: ADRCoreBundle:Default:block }
+
+adr_core_controller:
+    pattern:  /
+    defaults: { _controller: adr.core.controller:indexAction }

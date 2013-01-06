@@ -1,0 +1,47 @@
+adr_api_rest_controller_get:
+    pattern:  /v{apiVersion}/{type}/{name}
+    defaults: { _controller: adr.api.rest.controller:getAction }
+    requirements:
+        _method:  GET
+
+adr_api_rest_controller_get_key:
+    pattern:  /v{apiVersion}/{type}/{name}/{key}
+    defaults: { _controller: adr.api.rest.controller:getAction }
+    requirements:
+        _method:  GET
+
+adr_api_rest_controller_gpost:
+    pattern:  /v{apiVersion}/{type}/{name}
+    defaults: { _controller: adr.api.rest.controller:postAction }
+    requirements:
+        _method:  POST
+
+adr_api_rest_controller_post_key:
+    pattern:  /v{apiVersion}/{type}/{name}/{key}
+    defaults: { _controller: adr.api.rest.controller:postAction }
+    requirements:
+        _method:  POST
+
+adr_api_rest_controller_put:
+    pattern:  /v{apiVersion}/{type}/{name}
+    defaults: { _controller: adr.api.rest.controller:putAction }
+    requirements:
+        _method:  PUT
+
+adr_api_rest_controller_put_key:
+    pattern:  /v{apiVersion}/{type}/{name}/{key}
+    defaults: { _controller: adr.api.rest.controller:putAction }
+    requirements:
+        _method:  PUT
+
+adr_api_rest_controller_delete:
+    pattern:  /v{apiVersion}/{type}/{name}
+    defaults: { _controller: adr.api.rest.controller:deleteAction }
+    requirements:
+        _method:  DELETE
+
+adr_api_rest_controller_delete_key:
+    pattern:  /v{apiVersion}/{type}/{name}/{key}
+    defaults: { _controller: adr.api.rest.controller:deleteAction }
+    requirements:
+        _method:  DELETE

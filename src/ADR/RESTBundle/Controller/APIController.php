@@ -6,90 +6,84 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\Request;
 
-class APIController extends Controller
+class APIController
 {
-    /**
-     * @Route("/v{apiVersion}/{entity}/{id}")
-     * @Method({"GET"})
-     */
-    public function getAction($apiVersion, $entity, $id)
+    protected $request;
+    protected $redtrine;
+
+    public function __construct(Request $request, $redtrine)
     {
+        $this->request = $request;
+        $this->redtrine = $redtrine;
+    }
+
+    protected function getRequest()
+    {
+        return $this->request;
+    }
+
+    public function getAction($apiVersion, $type, $name, $key='')
+    {
+        $this->redtrine->test();
+
         $response = array(
                 'method'    =>  'GET',
                 'version'   =>  $apiVersion,
-                'entity'    =>  $entity,
-                'id'        =>  $id
+                'type'      =>  $type,
+                'name'      =>  $name,
+                'key'       =>  $key
             );
+
         return new Response(json_encode($response));
     }
 
-    /**
-     * @Route("/v{apiVersion}/{entity}")
-     * @Method({"POST"})
-     */
-    public function postAction($apiVersion, $entity)
+    public function postAction($apiVersion, $type, $name, $key='')
     {
         $parameters = $this->getRequest()->request->all();
         $response = array(
                 'method'    =>  'POST',
                 'version'   =>  $apiVersion,
-                'entity'    =>  $entity,
+                'type'      =>  $type,
+                'name'      =>  $name,
+                'key'       =>  $key,
                 'parameters'=>  $parameters
             );
+
         return new Response(json_encode($response));
     }
 
     /**
-     * Content Type must be multipart/form-data-urlencoded from Request
-     *
-     * @Route("/v{apiVersion}/{entity}/{id}")
-     * @Method({"PUT"})
+     * Content Type must be application/x-www-form-urlencoded from Request
      */
-    public function putAction($apiVersion, $entity, $id)
+    public function putAction($apiVersion, $type, $name, $key='')
     {
-        $body = $this->getRequest()->getContent();
-        $parameters = $this->getParametersFromPUTRequest($body);
+        $parameters = $this->getRequest()->request->all();
 
         $response = array(
                 'method'    =>  'PUT',
                 'version'   =>  $apiVersion,
-                'entity'    =>  $entity,
-                'id'        =>  $id,
+                'type'      =>  $type,
+                'name'      =>  $name,
+                'key'       =>  $key,
                 'parameters'=>  $parameters
             );
+
         return new Response(json_encode($response));
     }
 
-    /**
-     * @Route("/v{apiVersion}/{entity}/{id}")
-     * @Method({"DELETE"})
-     */
-    public function deleteAction($apiVersion, $entity, $id)
+    public function deleteAction($apiVersion, $type, $name, $key='')
     {
         $response = array(
                 'method'    =>  'DELETE',
                 'version'   =>  $apiVersion,
-                'entity'    =>  $entity,
-                'id'        =>  $id
+                'type'      =>  $type,
+                'name'      =>  $name,
+                'key'       =>  $key,
             );
+
         return new Response(json_encode($response));
     }
 
-    /**
-     * Parse Content Body From Response
-     *
-     * @param  [type] $body [description]
-     * @return [type]       [description]
-     */
-    protected function getParametersFromPUTRequest($body)
-    {
-        $parameters = array();
-        parse_str($body, $postvars);
-        foreach($postvars as $field => $value) {
-            $parameters[$field] = $value;
-        }
-
-        return $parameters;
-    }
 }

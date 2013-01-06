@@ -3,7 +3,7 @@ imports:
     - { resource: security.yml }
 
 framework:
-    #esi:             ~
+    esi: { enabled: true }
     #translator:      { fallback: "%locale%" }
     secret:          "%secret%"
     router:
@@ -64,3 +64,33 @@ snc_redis:
             type: predis
             alias: default
             dsn:  %adr_rest.redis.dsn%
+        # cluster:
+        #     type: predis
+        #     alias: cluster
+        #     dsn:
+        #         - redis://127.0.0.1/1
+        #         - redis://127.0.0.2/2
+
+adrrest:
+    hasher:
+        enabled: false
+        type: key
+        mode: 1
+    lockService:
+        type: redis
+        timeout: 30
+    handler:    redis
+    storage:
+        instances:
+            node0:
+                type: test
+                address: 127.0.0.1
+                port: 3679
+                database: 1
+                namespace: 1
+            node1:
+                type: test
+                address: 127.0.0.1
+                port: 3679
+                database: 0
+                namespace: 1

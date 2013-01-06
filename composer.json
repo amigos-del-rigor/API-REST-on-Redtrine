@@ -19,8 +19,9 @@
         "jms/security-extra-bundle": "1.2.*",
         "jms/di-extra-bundle": "1.1.*",
         "kriswallsmith/assetic": "1.1.*@dev",
-        "snc/redis-bundle":"1.1.0",
-        "predis/predis":"0.7.*@stable"
+        "snc/redis-bundle":"dev-master",
+        "predis/predis":"0.8.*@stable",
+        "lt/redtrine": "dev-master"
     },
     "require-dev": {
         "behat/behat":                  "*",
@@ -31,7 +32,8 @@
         "behat/mink-selenium2-driver": "*",
         "behat/mink-goutte-driver": "*",
         "behat/mink-sahi-driver": "*",
-        "raulfraile/ladybug-bundle":"dev-master"
+        "raulfraile/ladybug-bundle":"dev-master",
+        "mockery/mockery": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [
@@ -47,6 +49,7 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
         ]
     },
+    "minimum-stability": "dev",
     "extra": {
         "symfony-app-dir": "app",
         "symfony-web-dir": "web"

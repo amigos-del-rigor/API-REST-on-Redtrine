@@ -1,9 +1,17 @@
-adrrest:
-    resource: "@ADRRESTBundle/Controller/"
+adr_core:
+    resource: "@ADRCoreBundle/Resources/config/routing.yml"
+    prefix:   /core
+
+acme_test:
+    resource: "@AcmeTestBundle/Controller/"
     type:     annotation
+    prefix:   /
+
+adrrest:
+    resource: "@ADRRESTBundle/Resources/config/routing.yml"
     prefix:   /api
 
 # Internal routing configuration to handle ESI
-#_internal:
-#    resource: "@FrameworkBundle/Resources/config/routing/internal.xml"
-#    prefix:   /_internal
+_internal:
+   resource: "@FrameworkBundle/Resources/config/routing/internal.xml"
+   prefix:   /_internal
